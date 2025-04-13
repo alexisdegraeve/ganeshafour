@@ -12,5 +12,20 @@ export class BoardComponent {
 
   constructor() {
   }
+  activeCell(i: number, j: number, cell: any) {
+    console.log(i, ' ', j , ' ',cell);
+    const firstCellIndex = this.giveFirstEmpty(j);
+    if(firstCellIndex !== null) {
+      this.myBoard[firstCellIndex][j] = 1;
+    }
+  }
 
+  giveFirstEmpty(col: number): number | null {
+    for (let index = this.myBoard.length - 1; index >= 0; index--) {
+      if(this.myBoard[index][col] == null) {
+        return index;
+      }      
+    }
+    return null;
+  }
 }

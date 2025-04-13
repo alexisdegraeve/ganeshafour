@@ -3,8 +3,8 @@
 {{myBoard | json }}
 <div class="board">
 
-    <div *ngFor="let row of myBoard" class="d-flex">
-        <div *ngFor="let cell of row" class="case" [class.empty]="!cell">
+    <div *ngFor="let row of myBoard; let i = index" class="d-flex">
+        <div *ngFor="let cell of row; let j = index" class="case" [class.blue]="cell === 1" [class.empty]=" !cell " (click)="activeCell(i,j,cell) ">
             {{ cell | json}}
         </div>
 
