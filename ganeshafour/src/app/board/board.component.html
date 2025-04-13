@@ -1,1 +1,12 @@
 <p>board works!</p>
+
+{{myBoard | json }}
+<div class="board">
+
+    <div *ngFor="let row of myBoard" class="d-flex">
+        <div *ngFor="let cell of row" class="case" [class.empty]="!cell">
+            {{ cell | json}}
+        </div>
+
+    </div>
+</div>

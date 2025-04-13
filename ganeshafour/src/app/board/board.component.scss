@@ -1,0 +1,25 @@
+.board {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    width: 28rem;
+}
+
+.case {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    &.empty {
+        background-color: #fff;
+    }
+    &.blue {
+        background-color: blue;
+    }
+    &.red {
+        background-color: red;
+    }
+}
