@@ -1,5 +1,12 @@
+.game {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
 .board {
-    background-color: black;
+    background-color: #495771;
     display: flex;
     flex-direction: column;
     width: 28rem;
@@ -14,6 +21,7 @@
     border-radius: 50%;
     width: 4rem;
     height: 4rem;
+    margin: 0.25rem 0.15rem;
     &.empty {
         background-color: #fff;
     }
@@ -36,5 +44,32 @@
     100% {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+.btn {
+    width: 100%;
+    border: #FFC107 2px solid;
+    color: #FFC107;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 47px;
+    color: #FFC107;
+    border-radius: 25px;
+    margin: 5rem;
+}
+
+// Smartphones
+@media (max-width: 768px) {
+    .case {
+        width: 3rem;
+        height: 2.5rem;
+        margin: 0.2rem;
+    }
+    .board {
+        width: 21rem;
+        margin-bottom: 10rem;
     }
 }
