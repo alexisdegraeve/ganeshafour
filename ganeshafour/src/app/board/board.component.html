@@ -1,12 +1,31 @@
 <p>board works!</p>
 
 {{myBoard | json }}
-<div class="board">
+<ng-container *ngIf="!startgame">
+    <ng-container *ngIf="winner">
 
-    <div *ngFor="let row of myBoard; let i = index" class="d-flex">
-        <div *ngFor="let cell of row; let j = index" class="case" [class.drop]="isJustPlayed(i, j)" [class.blue]="cell === 1" [class.red]="cell === 2" [class.empty]=" !cell " (click)="activeCell(i,j,cell) ">
-            {{ cell | json}}
+        <div *ngIf="winner === 1">
+            YOU WIN!
         </div>
+        <div *ngIf="winner === 2">
+            YOU LOSE!
+        </div>
+    </ng-container>
+</ng-container>
 
+
+<hr />
+
+<ng-container *ngIf="startgame">
+    <div class="board">
+
+        <div *ngFor="let row of myBoard; let i = index" class="d-flex">
+            <div *ngFor="let cell of row; let j = index" class="case" [class.drop]="isJustPlayed(i, j)" [class.blue]="cell === 1" [class.red]="cell === 2" [class.empty]=" !cell " (click)="activeCell(i,j,cell) ">
+                {{ cell | json}}
+            </div>
+
+        </div>
     </div>
-</div>
+</ng-container>
+
+<button class="btn btn-primary" (click)="start()"> Start</button>

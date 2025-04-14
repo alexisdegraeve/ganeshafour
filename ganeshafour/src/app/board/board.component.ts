@@ -12,8 +12,18 @@ export class BoardComponent {
     .fill(null)
     .map(() => new Array(7).fill(null));
   lastMove: { row: number; col: number } | null = null;
+  startgame = false;
+  winner: number | null = null;
 
   constructor() {}
+
+  restart() {
+    this.startgame = true;
+    this.myBoard = new Array(6).fill(null).map(() => new Array(7).fill(null));
+    this.lastMove = null;
+    this.winner = null;
+  }
+
   activeCell(i: number, j: number, cell: any) {
     console.log(i, ' ', j, ' ', cell);
     const firstCellIndex = this.giveFirstEmpty(j);
@@ -21,7 +31,12 @@ export class BoardComponent {
       this.myBoard[firstCellIndex][j] = 1;
       this.lastMove = { row: firstCellIndex, col: j };
       console.log('HUMAN : ' ,this.checkWinner(i, j, 1));
-      this.computerPlay();
+      this.winner = this.checkWinner(i, j, 1) ? 1 : null;
+      if(!this.winner) {
+        this.computerPlay();
+      } else {
+        this.startgame = false;
+      }
     }
   }
 
@@ -53,7 +68,10 @@ export class BoardComponent {
         if (firstCellIndex !== null) {
           this.myBoard[firstCellIndex][searchCol] = 2;
           this.lastMove = { row: firstCellIndex, col: searchCol };
-          console.log('COMPUTER : ' ,this.checkWinner(this.lastMove.row, this.lastMove.col, 2));
+          this.winner = this.checkWinner(this.lastMove.row, this.lastMove.col, 2) ? 2 : null;
+          if(this.winner) {
+            this.startgame = false;
+          }
         }
       }
 
@@ -73,131 +91,133 @@ export class BoardComponent {
   }
 
   checkWinner(rowRef: number, colRef: number, player: number): boolean {
-    // Check Horizontale Right
-    if (this.checkHorizontalRight(rowRef, colRef, player)) {
+    // Check Horizontale
+    if (this.checkHorizontal(rowRef, colRef, player)>=4) {
       return true;
     }
 
-    // Check Horizontale Left
-    if (this.checkHorizontalLeft(rowRef, colRef, player)) {
+    // Check Verticale
+    if (this.checkVertical(rowRef, colRef, player)>=4) {
       return true;
     }
 
-    // Check Verticale down
-    if (this.checkVerticalDown(rowRef, colRef, player)) {
+    // Check Diagonale
+    if (this.checkDiagonaleUpLeft(rowRef, colRef, player)>=4 || (this.checkDiagonaleUpRight(rowRef, colRef, player)>=4)) {
       return true;
     }
 
-    // Check Verticale up
-    if (this.checkVerticalUp(rowRef, colRef, player)) {
-      return true;
-    }
-
-    // Check Diagonale down
-    if (this.checkDiagonaleDown(rowRef, colRef, player)) {
-      return true;
-    }
-
-    // Check Diagonale up
-    if (this.checkDiagonaleUp(rowRef, colRef, player)) {
-      return true;
-    }
     return false;
   }
 
-  checkHorizontalRight(
-    rowRef: number,
-    colDef: number,
-    player: number
-  ): boolean {
-    let cpt = 0;
-    for (let index = colDef; index < this.myBoard[0].length; index++) {
+  checkHorizontal(rowRef: number, colDef: number, player: number): number {
+    let cpt = 1;
+    for (let index = colDef + 1; index < this.myBoard[0].length; index++) {
       if (this.myBoard[rowRef][index] === player) {
         cpt++;
-      }
-      if (cpt === 4) {
+      } else {
         break;
       }
     }
-    if (cpt === 4) {
-      return true;
-    }
-    return false;
-  }
 
-  checkHorizontalLeft(rowRef: number, colDef: number, player: number): boolean {
-    let cpt = 0;
-    for (let index = colDef; index >= 0; index--) {
+    for (let index = colDef - 1; index >= 0; index--) {
       if (this.myBoard[rowRef][index] === player) {
         cpt++;
-      }
-      if (cpt === 4) {
+      } else {
         break;
       }
     }
-    if (cpt === 4) {
-      return true;
-    }
-    return false;
+
+    return cpt;
   }
 
-  checkVerticalDown(rowRef: number, colDef: number, player: number): boolean {
-    let cpt = 0;
-    for (let index = rowRef; index < this.myBoard.length; index++) {
+
+  checkVertical(rowRef: number, colDef: number, player: number): number {
+    let cpt = 1;
+    for (let index = rowRef + 1; index < this.myBoard.length; index++) {
       if (this.myBoard[index][colDef] === player) {
         cpt++;
-      }
-      if (cpt === 4) {
+      } else {
         break;
       }
     }
-    if (cpt === 4) {
-      return true;
-    }
-    return false;
-  }
 
-  checkVerticalUp(rowRef: number, colDef: number, player: number): boolean {
-    let cpt = 0;
-    for (let index = rowRef; index >= 0; index--) {
+    for (let index = rowRef - 1; index >= 0; index--) {
       if (this.myBoard[index][colDef] === player) {
         cpt++;
-      }
-      if (cpt === 4) {
+      } else {
         break;
       }
     }
-    if (cpt === 4) {
-      return true;
-    }
-    return false;
+    return cpt;
   }
 
-  checkDiagonaleDown(rowRef: number, colDef: number, player: number): boolean {
-    let cpt = 0;
-    let col = colDef;
-    let row = rowRef;
+
+  checkDiagonaleUpLeft(rowRef: number, colDef: number, player: number): number {
+    let cpt = 1;
+    let col = colDef + 1;
+    let row = rowRef + 1;
     while (col < this.myBoard[0].length && row < this.myBoard.length) {
       if (this.myBoard[row][col] === player) {
         cpt++;
+      } else {
+        break;
       }
       col++;
       row++;
     }
-    return cpt >= 4;
-  }
 
-  checkDiagonaleUp(rowRef: number, colDef: number, player: number): boolean {
-    let cpt = 0;
-    let col = colDef;
-    let row = rowRef;
+    col = colDef - 1;
+    row = rowRef - 1;
     while (col >= 0 && row >= 0) {
       if (this.myBoard[row][col] === player) {
         cpt++;
+      } else {
+        break;
       }
       col--;
       row--;
     }
-    return cpt >= 4;
+    return cpt;
   }
+
+  checkDiagonaleUpRight(rowRef: number, colDef: number, player: number): number {
+    let cpt = 1;
+    let col = colDef + 1;
+    let row = rowRef - 1;
+    while (col < this.myBoard[0].length && row >= 0) {
+      if (this.myBoard[row][col] === player) {
+        cpt++;
+      } else {
+        break;
+      }
+      col++;
+      row--;
+    }
+
+    col = colDef - 1;
+    row = rowRef + 1;
+    while (col >= 0 && row < this.myBoard.length) {
+      if (this.myBoard[row][col] === player) {
+        cpt++;
+      } else {
+        break;
+      }
+      col--;
+      row++;
+    }
+    return cpt;
+  }
+
+  computerBlockPlayer() {
+
+  }
+
+  computerAttackPlay() {
+
+  }
+
+  start() {
+    this.restart();
+  }
+
 }
