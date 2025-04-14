@@ -288,6 +288,9 @@ export class BoardComponent implements OnInit {
   computerAttackPlay(): boolean {
     for (let row = 0; row < this.myBoard.length; row++) {
       for (let col = 0; col < this.myBoard[0].length; col++) {
+        // Vérification des différentes directions pour attaquer
+
+        // HORIZONTALE
         if (this.checkHorizontal(row, col, 2) >= 3) {
           const right = col + 1;
           if (right < this.myBoard[0].length) {
@@ -326,9 +329,7 @@ export class BoardComponent implements OnInit {
           if (
             targetCol < this.myBoard[0].length &&
             targetRow < this.myBoard.length &&
-            this.myBoard[targetRow][targetCol] === 0 &&
-            (targetRow === this.myBoard.length - 1 ||
-              this.myBoard[targetRow + 1][targetCol] !== 0)
+            this.myBoard[targetRow][targetCol] === 0
           ) {
             this.myBoard[targetRow][targetCol] = 2;
             this.lastMove = { row: targetRow, col: targetCol };
@@ -343,9 +344,7 @@ export class BoardComponent implements OnInit {
           if (
             targetCol >= 0 &&
             targetRow < this.myBoard.length &&
-            this.myBoard[targetRow][targetCol] === 0 &&
-            (targetRow === this.myBoard.length - 1 ||
-              this.myBoard[targetRow + 1][targetCol] !== 0)
+            this.myBoard[targetRow][targetCol] === 0
           ) {
             this.myBoard[targetRow][targetCol] = 2;
             this.lastMove = { row: targetRow, col: targetCol };
