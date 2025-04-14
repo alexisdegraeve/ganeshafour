@@ -2,11 +2,13 @@
     <ng-container *ngIf="!startgame">
         <ng-container *ngIf="winner">
 
-            <div *ngIf="winner === 1">
-                <span class="text-win">YOU <span class="yellow">WIN!</span></span>
+            <div *ngIf="winner === 1" class="result">
+                <span class="text-win-lose">YOU <span class="yellow">WIN!</span></span>
+                <i class="bi bi-trophy-fill yellow"></i>
             </div>
-            <div *ngIf="winner === 2">
-                YOU LOSE!
+            <div *ngIf="winner === 2" class="result">
+                <span class="text-win-lose">YOU <span class="red outline">LOSE!</span></span>
+                <i class="bi bi-emoji-tear-fill  white"></i>
             </div>
         </ng-container>
     </ng-container>

@@ -82,8 +82,7 @@
     }
 }
 
-.text-win {
-    /* YOU WIN! */
+.text-win-lose {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
@@ -94,4 +93,28 @@
 
 .yellow {
     color: #FFC107;
+}
+
+.red {
+    color: red;
+}
+
+.white {
+    color: #fff;
+}
+
+.outline {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #fff;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    i {
+        font-size: 5rem;
+    }
 }
