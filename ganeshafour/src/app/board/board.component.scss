@@ -13,6 +13,7 @@
     z-index: 200;
     border-radius: 0.5rem;
     padding: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .case {
@@ -22,9 +23,9 @@
     align-items: center;
     border-radius: 50%;
     width: 4rem;
-    height: 4rem;
+    aspect-ratio: 1 / 1; // hauteur auto-ajustée selon la largeur
+    margin: 0.2rem;
     z-index: 100;
-    margin: 0.25rem 0.15rem;
     background: #FFFFFF;
     border: 2px solid #FFFFFF;
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -37,6 +38,9 @@
     &.red {
         background-color: red;
     }
+    &.white {
+        background-color: white;
+    }
     &.drop {
         animation: drop 0.4s ease-out;
     }
@@ -45,7 +49,7 @@
 @keyframes drop {
     0% {
         transform: translateY(-200px);
-        opacity: 0;
+        opacity: 0.6;
     }
     100% {
         transform: translateY(0);
@@ -71,11 +75,23 @@
 @media (max-width: 768px) {
     .case {
         width: 3rem;
-        height: 2.5rem;
-        margin: 0.2rem;
     }
     .board {
         width: 21rem;
-        margin-bottom: 10rem;
+        margin-bottom: 5rem;
     }
+}
+
+.text-win {
+    /* YOU WIN! */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 64px;
+    line-height: 75px;
+    color: #FFFFFF;
+}
+
+.yellow {
+    color: #FFC107;
 }
