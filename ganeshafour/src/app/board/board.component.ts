@@ -24,20 +24,13 @@ export class BoardComponent implements OnInit {
     this.myBoard = new Array(6).fill(null).map(() => new Array(7).fill(null));
     this.lastMove = null;
     this.winner = null;
-
-    // this.myBoard[5][0] = 2;
-    // this.myBoard[5][1] = 2;
-    // this.myBoard[5][2] = 2;
-    // this.computerPlay();
   }
 
   activeCell(i: number, j: number, cell: any) {
-    console.log(i, ' ', j, ' ', cell);
     const firstCellIndex = this.giveFirstEmpty(j);
     if (firstCellIndex !== null) {
       this.myBoard[firstCellIndex][j] = 1;
       this.lastMove = { row: firstCellIndex, col: j };
-      console.log('HUMAN : ', this.checkWinner(i, j, 1));
       this.winner = this.checkWinner(i, j, 1) ? 1 : null;
       if (!this.winner) {
         this.computerPlay();
@@ -62,32 +55,11 @@ export class BoardComponent implements OnInit {
   }
 
   computerPlay() {
-    console.log('Computert play');
     setTimeout(() => {
-      // Trouver la ligne vide correspondate
-      // Placer le pion
-      // Mettre a jour last move
-
-      // Rechercher une colonne dispo
-      // let searchCol = this.giveFirstColFree();
-      // if (searchCol !== null) {
-      //   const firstCellIndex = this.giveFirstEmpty(searchCol);
-      //   if (firstCellIndex !== null) {
-      //     this.myBoard[firstCellIndex][searchCol] = 2;
-      //     this.lastMove = { row: firstCellIndex, col: searchCol };
-      //     this.winner = this.checkWinner(this.lastMove.row, this.lastMove.col, 2) ? 2 : null;
-      //     if(this.winner) {
-      //       this.startgame = false;
-      //     }
-      //   }
-      // }
       if (!this.computerAttackPlay()) {
-        console.log('BLOCK Player');
         if (!this.computerBlockPlayer()) {
           this.randomComputerMove();
         }
-      } else {
-        console.log('Attack Player');
       }
 
       if (this.lastMove && this.lastMove.row && this.lastMove.col) {
@@ -98,20 +70,6 @@ export class BoardComponent implements OnInit {
           this.startgame = false;
         }
       }
-
-      // if(this.computerBlockPlayer()) {
-      //   console.log('computer BLOCK PLAYER');
-      //   if(this.lastMove && this.lastMove.row && this.lastMove.col) {
-      //     this.winner = this.checkWinner(this.lastMove.row, this.lastMove.col, 2) ? 2 : null;
-      //     if(this.winner) {
-      //       this.startgame = false;
-      //     }
-      //   }
-      // } else {
-      //   console.log('computer ATTACK PLAYER');
-      // }
-
-      console.log('Computert finish to play');
     }, 500);
   }
 
@@ -330,27 +288,16 @@ export class BoardComponent implements OnInit {
   computerAttackPlay(): boolean {
     for (let row = 0; row < this.myBoard.length; row++) {
       for (let col = 0; col < this.myBoard[0].length; col++) {
-        // Vérifie chaque direction : HORIZONTALE, VERTICALE, DIAGONALES
-
-        // HORIZONTALE
         if (this.checkHorizontal(row, col, 2) >= 3) {
-          // Tente de bloquer à droite
-          console.log('ATTAQUE HORIZONTALEMENT');
-          console.log('bloaque a droite');
           const right = col + 1;
           if (right < this.myBoard[0].length) {
             const emptyRow = this.giveFirstEmpty(right);
             if (emptyRow !== null) {
-              console.log('emptyRow ', emptyRow);
-              console.log('right ', right);
               this.myBoard[emptyRow][right] = 2;
               this.lastMove = { row: emptyRow, col: right };
               return true;
             }
           }
-
-          console.log('bloaque a gauche');
-          // Tente de bloquer à gauche
           const left = col - 1;
           if (left >= 0) {
             const emptyRow = this.giveFirstEmpty(left);
@@ -410,17 +357,15 @@ export class BoardComponent implements OnInit {
     return false;
   }
 
-  start() {
-    this.restart();
-  }
-
   randomComputerMove() {
-    console.log("L'ordinateur joue de manière aléatoire");
     const col = Math.floor(Math.random() * this.myBoard[0].length);
     const row = this.giveFirstEmpty(col);
     if (row !== null) {
       this.myBoard[row][col] = 2;
       this.lastMove = { row, col };
     }
+  }
+  start() {
+    this.restart();
   }
 }
