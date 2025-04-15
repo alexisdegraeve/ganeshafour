@@ -24,6 +24,7 @@
         </div>
     </ng-container>
 
-    <button class="btn btn-dark" (click)="start()"> Start</button>
+    <button class="btn btn-dark yellow" (click)="start()" *ngIf="!startgame"> <i class="bi bi-play-fill"></i><span>Start</span></button>
+    <button class="btn btn-dark  border-white" (click)="stop()" *ngIf="startgame"> <i class="bi bi-stop-fill red"></i><span>Stop</span></button>
 
 </div>

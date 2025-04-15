@@ -367,4 +367,8 @@ export class BoardComponent implements OnInit {
   start() {
     this.restart();
   }
+  stop() {
+    this.winner = null;
+    this.startgame = false;
+  }
 }

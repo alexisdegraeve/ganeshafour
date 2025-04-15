@@ -58,17 +58,22 @@
 }
 
 .btn {
-    width: 70%;
     border: #FFC107 2px solid;
-    color: #FFC107;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
-    color: #FFC107;
     border-radius: 25px;
     text-transform: uppercase;
     margin: 5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    i {
+        font-size: 24px;
+        margin-right: 0.25rem;
+    }
+    span {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+    }
 }
 
 // Smartphones
